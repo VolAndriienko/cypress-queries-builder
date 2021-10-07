@@ -1,24 +1,3 @@
-# CypressQueriesBuilder
+# Cypress Queries Builder
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
-
-## Code scaffolding
-
-Run `ng generate component component-name --project cypress-queries-builder` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project cypress-queries-builder`.
-> Note: Don't forget to add `--project cypress-queries-builder` or else it will be added to the default project in your `angular.json` file. 
-
-## Build
-
-Run `ng build cypress-queries-builder` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build cypress-queries-builder`, go to the dist folder `cd dist/cypress-queries-builder` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test cypress-queries-builder` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+This is library for writing effective and complex queries for cypress. Later will be provided more details.
