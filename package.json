@@ -2,6 +2,11 @@
   "name": "cypress-queries-builder",
   "author": "VolAndriienko",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VolAndriienko/cypress-queries-builder.git"
+  },
+  "homepage": "https://github.com/VolAndriienko/cypress-queries-builder#readme",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
