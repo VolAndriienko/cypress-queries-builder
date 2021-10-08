@@ -9,8 +9,15 @@ export interface NameValue {
 }
 
 export interface CypressQueriesParams {
-  alwaysFindInBody?: boolean;
+  findInFrame: boolean;
+  mainSelector?: string;
   pathPrefix: string;
+  iframeBody?: Cypress.Chainable<unknown>;
+  hideToolbar?: () => void;
+  showToolbar?: () => void;
+  toggleMenu?: () => void;
+  hideMenu?: () => void;
+  keydown?: (key: string) => void;
 }
 
 export type TestCase = () => void;
@@ -24,7 +31,7 @@ export interface DefaultOptions extends ElementOptions {
   findInBody?: boolean;
 }
 
-export interface ExecuteOptions extends DefaultOptions, ElementOptions {
+export interface ExecuteOptions extends DefaultOptions {
   classNames?: StringOrArray | null;
   selectors?: StringOrArray | null;
   elementNumber?: number;
@@ -157,3 +164,50 @@ export interface TriggerOptions extends FindOptions {
 }
 
 export interface TriggerInputOptions extends TriggerOptions, ExecuteOptions { }
+
+export type QueryAction<T> = (options: T) => Cypress.Chainable<any>;
+export type RunTestCaseAction = (input?: number | number[]) => void;
+
+export interface BuilderActions {
+  visit: (pathPostfix?: string, options?: Cypress.VisitOptions) => void;
+  testCases: {
+    run: RunTestCaseAction
+    add: (testCases: TestCase[]) => RunTestCaseAction;
+  },
+  find: QueryAction<FindInputOptions>;
+  type: QueryAction<TypeInputOptions>;
+  clear: QueryAction<ExecuteOptions>;
+  click: QueryAction<ClickInputOptions>;
+  exist: QueryAction<ExistInputOptions>;
+  disabled: QueryAction<DisabledInputOptions>;
+  contain: QueryAction<ContainInputOptions>;
+  scrollable: QueryAction<ScrollableInputOptions>;
+  trigger: QueryAction<TriggerInputOptions>;
+  have: {
+    class: QueryAction<HaveClassInputOptions>;
+    child: QueryAction<HaveChildInputOptions>;
+    length: QueryAction<HaveLengthInputOptions>;
+  },
+  style: {
+    get: QueryAction<GetStyleInputOptions>;
+    compare: QueryAction<StyleCompareInputOptions>;
+  },
+  property: {
+    get: QueryAction<PropertyInputOptions>;
+    is: QueryAction<PropertyIsInputOptions>;
+  }
+
+  help: {
+    classSelector: (className: string) => string;
+    getSelectors: (selectors: StringOrArray) => string;
+    getClassNamesSelector: (selectors: StringOrArray) => string;
+    getAttributesSelector: (selectors: NameValue[] | NameValue) => string;
+    getElementIndex: (elementNumber?: number) => number;
+  },
+
+  wrap: {
+    toggleMenu: () => void,
+    hideToolbar: () => void,
+    showToolbar: () => void
+  }
+}

@@ -1,6 +1,6 @@
 {
-  "name": "cypress-queries-builder",
-  "version": "0.0.1",
+  "name": "cypress-queries",
+  "version": "0.0.2",
   "author": "VolAndriienko",
   "repository": {
     "type": "git",
@@ -8,8 +8,7 @@
   },
   "homepage": "https://github.com/VolAndriienko/cypress-queries-builder#readme",
   "peerDependencies": {
-    "@angular/common": "^12.0.5",
-    "@angular/core": "^12.0.5",
+    "@angular/compiler": "^12.0.5",
     "cypress": "^8.5.0"
   },
   "dependencies": {
