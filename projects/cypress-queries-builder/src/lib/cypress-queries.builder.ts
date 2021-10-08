@@ -51,15 +51,18 @@ const existance = (exist: boolean) => exist ? 'exist' : 'not.exist';
 const havingClass = (have: boolean) => have ? 'have.class' : 'not.have.class';
 const isDisalbed = (disabled: boolean) => disabled ? 'be.disabled' : 'not.be.disabled';
 //#endregion
+const defaultSelector = 'body';
 
-function build(cy: Cypress.cy, params: t.CypressQueriesParams = { pathPrefix: '', findInFrame: false, mainSelector: 'body' }): t.BuilderActions {
+function build(cy: Cypress.cy, params: t.CypressQueriesParams = { pathPrefix: '', findInFrame: false }): t.BuilderActions {
   //#region storybook
+  const mainSelector = () => params.mainSelector || defaultSelector
+
   const getIframeBody = () => params.iframeBody ||
     cy.get('#storybook-preview-iframe').its('0.contentDocument').should('exist')
       .its('body').should('not.be.undefined').then(cy.wrap);
 
 
-  const keydown = params.keydown || ((key: string) => cy.get('body').trigger('keydown', { key }));
+  const keydown = params.keydown || ((key: string) => cy.get(defaultSelector).trigger('keydown', { key }));
   const toggleMenu = params.toggleMenu || (() => keydown('s'));
 
   const hideToolbar = params.hideToolbar || (() => cy.get('#storybook-panel-root').then($panel => {
@@ -76,7 +79,7 @@ function build(cy: Cypress.cy, params: t.CypressQueriesParams = { pathPrefix: ''
     }
   }));
 
-  const hideMenu = params.hideMenu || (() => cy.get('body').then((body) => {
+  const hideMenu = params.hideMenu || (() => cy.get(defaultSelector).then((body) => {
     if (body[0].querySelector('.sidebar-container')) {
       toggleMenu();
     }
@@ -86,13 +89,13 @@ function build(cy: Cypress.cy, params: t.CypressQueriesParams = { pathPrefix: ''
 
   //#region common
   const getQueryContainer = (findInBody?: boolean) =>
-    findInBody || !params.findInFrame ? cy.get(params.mainSelector) : getIframeBody();
+    findInBody || !params.findInFrame ? cy.get(mainSelector()) : getIframeBody();
 
   const visit = (pathPostfix?: string, options?: Cypress.VisitOptions) => {
     cy.visit(stringValue(params.pathPrefix) + stringValue(pathPostfix || ''), options || {}).wait(2000);
     if (params.findInFrame) {
       hideMenu();
-      cy.get('body').click();
+      cy.get(defaultSelector).click();
     }
   };
 

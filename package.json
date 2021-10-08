@@ -37,7 +37,7 @@
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "cypress": "^8.5.0",
-    "cypress-queries": "file:dist/cypress-queries-builder/cypress-queries-0.0.2.tgz",
+    "cypress-queries": "file:dist/cypress-queries-builder/cypress-queries-0.0.3.tgz",
     "jasmine-core": "~3.7.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
