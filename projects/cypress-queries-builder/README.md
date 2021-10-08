@@ -5,7 +5,7 @@ This is library for simplifying writing queries with [Cypress](https://www.cypre
 ## Installation
 To install with npm, run command:
 ```
-npm i cypress-queries
+npm i cypress-queries --save-dev
 ```
 
 
@@ -24,22 +24,24 @@ Here, symbol `_` is used as builder instance variable name (to have it as shorte
 
 With second argument `params` can be passed set of options:
 
-| Option         | Nullable | Type                         | Default Value   | Description                               |
-| -------------- |----------|------------------------------|:---------------:|:-----------------------------------------:|
-| `mainSelector` | Yes       | `string`                     | `body`          | Selector of main container for each query |
-| `findInFrame`  | No       | `boolean`                    | `false`         | Using storybook iframe instead of main container |
-| `iframeBody`   | Yes      | `Cypress.Chainable<unknown>` | -               | Using custom iframe instead of storybook |
-| `pathPrefix`   | No       | `string`                     | empty string    | Default prefix for visiting pages |
-| `hideToolbar`  | Yes      | `() => void`                 | -               | - |
-| `toggleMenu`   | Yes      | `() => void`                 | -               | - |
-| `hideMenu`     | Yes      | `() => void`                 | -               | - |
-| `keydown`      | Yes      | `() => void`                 | -               | - |
+| Option         | Type                | Default Value | Description                               |
+| -------------- |---------------------|:-------------:|:-----------------------------------------:|
+| `mainSelector` | `string`            | `body`        | Selector of main container for each query |
+| `findInFrame`  | `boolean`           | `false`       | Using storybook iframe instead of main container |
+| `iframeBody`   | `Cypress.Chainable` | -             | Using custom iframe instead of storybook |
+| `pathPrefix`   | `string`            | empty string  | Default prefix for visiting pages |
+| `hideToolbar`  | `() => void`        | -             | - |
+| `toggleMenu`   | `() => void`        | -             | - |
+| `hideMenu`     | `() => void`        | -             | - |
+| `keydown`      | `() => void`        | -             | - |
 
 The instance of cypress queries builder, allows to run next actions:
 
 
 ## Usage
-Builder instance provides next interface
+Builder instance provides next commands:
+
+___
 
 
 ### `visit`      
@@ -55,6 +57,9 @@ Example:
 ```
  _.visit('test-route/2');
 ```
+
+___
+
 
 ### `testCases`
 Helps to have more flexible test cases usage, 
@@ -78,10 +83,19 @@ _.testCases.run([2]); // so Cypress will execute only second test case
 or
 ```
 _.testCases.add([
-      () => it('1. Visit first route', () => _.visit('first-route'); ),
-      () => it('2. Visit second route', () => _.visit('second-route'); ),
-    ])([2]) // so Cypress will execute only second test case
+() => it('1. Visit first route', 
+  () => {
+    _.visit('first-route')
+  }),
+() => it('2. Visit second route', 
+  () => {
+    _.visit('second-route')
+  }),
+])([2]) // so Cypress will execute only second test case
 ```
+
+___
+
 
 ### `find`
 Command returns `Cypress.Chainable` object in order to do further test cases.
@@ -91,9 +105,16 @@ Input options extends: [ExecuteOptions](#executeoptions), [FindOptions](#findopt
 Example usage:
 ```
 // get second element with class "link", but wait 5 seconds before it
-const finded = _.find({ classNames: 'link', elementNumber: 2, wait: { before: 5000 } });
+const finded = _.find({ 
+    classNames: 'link', 
+    elementNumber: 2, 
+    wait: { before: 5000 } 
+});
 finded.click();
 ```
+
+___
+
 
 ### `type`
 Input options extends: 
@@ -109,8 +130,14 @@ Input options extends:
 
 #### Example usage
 ```
-_.type({ text: 'test', classNames: ['test-class1', 'test-class2'] });
+_.type({ 
+  text: 'test', 
+  classNames: ['test-class1', 'test-class2'] 
+});
 ```
+
+___
+
 
 ### `clear`
 Input options extends: 
@@ -122,6 +149,9 @@ _.clear({ classNames:  'test-class' });
 
 ```
 
+___
+
+
 ### `click`
 Command proxy for cypress .click() chain.
 
@@ -131,6 +161,16 @@ Input options extends:
 | Input parameters | Type      | Is nullable | Description |
 |----------------- |-----------|------------ |-------------|
 | `force`          | `boolean` | Yes         | - |
+#### Example usage:
+```
+_.click({
+    classNames:  'test-class', 
+    force: true
+});
+
+```
+
+___
 
 
 ### `exist`
@@ -144,8 +184,14 @@ Input options extends: [ExecuteOptions](#executeoptions), [DefaultOptions](#defa
 
 #### Example usage
 ```
-_.exist({ exist, classNames: c.selectedItemClass, elementNumber });
+_.exist({ 
+  exist, 
+  classNames: selectedItemClass, 
+  elementNumber 
+});
 ```
+
+___
 
 
 ### `disabled`
@@ -159,8 +205,14 @@ Input options extends: [FindOptions](#findoptions)
 
 #### Example usage
 ```
-_.disabled({ disabled: true, classNames: c.selectedItemClass, elementNumber });
+_.disabled({ 
+  disabled: true, 
+  classNames: selectedItemClass, 
+  elementNumber
+});
 ```
+
+___
 
 
 ### `contain`
@@ -175,9 +227,20 @@ Input options extends: [ExecuteOptions](#executeoptions), [PropertyOptions](#pro
 
 #### Example usage
 ```
-_.contain({ value: true, expectedValue: text, classNames: loginEmailInputClass })
-_.contain({ text: true, expectedValue: text, classNames: loginEmailInputClass })
+_.contain({ 
+    value: true,
+    expectedValue: text,
+    classNames: loginEmailInputClass 
+})
+
+_.contain({ 
+    text: true, 
+    expectedValue: text, 
+    classNames: loginEmailInputClass 
+})
 ```
+
+___
 
 
 ### `scrollable`
@@ -189,8 +252,13 @@ Input options extends: [ExecuteOptions](#executeoptions), [FindOptions](#findopt
 
 #### Example usage
 ```
-_.scrollable({ isScrollable, classNames: classificationsScrollContainerClass });
+_.scrollable({ 
+    isScrollable, 
+    classNames: classificationsScrollContainerClass 
+});
 ```
+
+___
 
 
 ### `trigger`
@@ -202,8 +270,14 @@ Input options extends: [ExecuteOptions](#executeoptions), [FindOptions](#findopt
 
 #### Example usage
 ```
-_.trigger({ triggerName: 'mouseover', classNames: c.autocompleteInputClass });
+_.trigger({ 
+    triggerName: 'mouseover', 
+    classNames: c.autocompleteInputClass 
+});
 ```
+
+___
+
 
 ### `have`
 Input options extends: [ExecuteOptions](#executeoptions), [FindOptions](#findoptions)
@@ -218,7 +292,11 @@ Have has next suboptions:
 
 ##### Example usage
 ```
-_.have.class({ className, have, classNames: 'looking-for' });
+_.have.class({ 
+    className, 
+    have, 
+    classNames: 'looking-for'
+});
 ```
 
 #### `have.child`
@@ -231,7 +309,12 @@ _.have.class({ className, have, classNames: 'looking-for' });
 
 ##### Example usage
 ```
-_.have.child({ childClassNames: 'childe', have: true, selectors, elementNumber });
+_.have.child({
+    childClassNames: 'childe',
+    have: true,
+    selectors,
+    elementNumber
+});
 ```
 
 #### `have.length`
@@ -243,8 +326,14 @@ _.have.child({ childClassNames: 'childe', have: true, selectors, elementNumber }
 
 ##### Example usage
 ```
-_.have.length({ expectedLength, have: true, classNames: removeIconPath });
+_.have.length({ 
+    expectedLength,
+    have: true,
+    classNames: removeIconPath
+});
 ```
+
+___
 
 
 ### `style`
@@ -259,7 +348,10 @@ Have has next suboptions:
 
 ##### Example usage
 ```
-_.style.get({ styleName: 'width', classNames:  inputClass });
+_.style.get({
+    styleName: 'width',
+    classNames:  inputClass
+});
 ```
 
 #### `style.compare`
@@ -271,8 +363,15 @@ Input options extends [CompareOptions](#compareoptions)
 
 ##### Example usage
 ```
-_.style.compare({ expectedValue, styleName: 'width', classNames: inputClass, equal });
+_.style.compare({
+    expectedValue,
+    styleName: 'width',
+    classNames: inputClass,
+    equal
+});
 ```
+
+___
 
 
 ### `property`
@@ -285,7 +384,11 @@ Input options extends: [PropertyOptions](#propertyoptions)
 
 ##### Example usage
 ```
-_.property.get({ text: true, selectors: ['table', 'td.cell'], elementNumber });
+_.property.get({ 
+    text: true, 
+    selectors: ['table', 'td.cell'],
+    elementNumber
+});
 ```
 
 #### `property.is`
@@ -296,11 +399,20 @@ _.property.get({ text: true, selectors: ['table', 'td.cell'], elementNumber });
 
 ##### Example usage
 ```
-_.property.is({ expectedValue, classNames: 'data', text: true, is: true });
+_.property.is({
+    expectedValue,
+    classNames: 'data',
+    text: true,
+    is: true
+});
 ```
+
+___
 
 
 ## Common Options:
+
+
 
 ### `ElementOptions`
 
@@ -308,6 +420,8 @@ _.property.is({ expectedValue, classNames: 'data', text: true, is: true });
 |----------------- |----------|------------ |-------------|
 | `selector`       | `string` | Yes         | - |
 | `elementIndex`   | `number` | Yes         | - |
+
+___
 
 
 ### `ChildOptions`
@@ -317,12 +431,18 @@ _.property.is({ expectedValue, classNames: 'data', text: true, is: true });
 | `childSelector`     | `string` | Yes         | - |
 | `childElementIndex` | `number` | Yes         | - |
 
+___
+
+
 ### `DefaultOptions`
 Extends: [ElementOptions](#elementoptions)
 
 | Input parameters    | Type      | Is nullable | Description |
 |---------------------|-----------|------------ |-------------|
 | `findInBody`        | `boolean` | Yes         | - |
+
+___
+
 
 ### `ExecuteOptions`
 Extends: [DefaultOptions](#defaultoptions)
@@ -333,6 +453,9 @@ Extends: [DefaultOptions](#defaultoptions)
 | `selectors`         | `StringOrArray` | Yes         | - |
 | `elementNumber`     | `StringOrArray` | Yes         | - |
 
+___
+
+
 ### `TimerOptions`
 | Input parameters | Sub parameters | Type     | Is nullable | Description |
 |------------------|----------------|----------|------------ |-------------|
@@ -340,6 +463,9 @@ Extends: [DefaultOptions](#defaultoptions)
 |                  | after          | `number` | Yes         | - |
 |                  | before         | `number` | Yes         | - |
 | `timeout`        |                | `number` | Yes         | - |
+
+___
+
 
 ### `FindOptions`
 Extends: [DefaultOptions](#defaultoptions), [ChildOptions](#childoptions), [TimerOptions](#timeroptions)
@@ -349,6 +475,9 @@ Extends: [DefaultOptions](#defaultoptions), [ChildOptions](#childoptions), [Time
 |--------------------|--------------------------|------------ |---------------|
 | `container`        | `Cypress.Chainable<any>` | Yes         | - |
 | `skipElementIndex` | `boolean`                | Yes         | - |
+
+___
+
 
 ### `KeyPressOptions`
 | Input parameters   | Type                     | Is nullable | Default value |
@@ -360,6 +489,8 @@ Extends: [DefaultOptions](#defaultoptions), [ChildOptions](#childoptions), [Time
 | `selectall`        | `boolean`                | Yes         | - |
 | `backspace`        | `boolean`                | Yes         | - |
 
+___
+
 
 ### `PropertyOptions`
 Extends: [FindOptions](#findoptions)
@@ -369,6 +500,9 @@ Extends: [FindOptions](#findoptions)
 | `text`              | `boolean` | Yes         | - |
 | `value`             | `boolean` | Yes         | - |
 
+___
+
+
 ### `CompareOptions`
 
 | Input parameters    | Type      | Is nullable | Description |
@@ -376,3 +510,6 @@ Extends: [FindOptions](#findoptions)
 | `equal`             | `boolean` | Yes         | - |
 | `graterThan`        | `boolean` | Yes         | - |
 | `contain`           | `boolean` | Yes         | - |
+
+
+___
