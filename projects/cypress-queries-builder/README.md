@@ -12,7 +12,7 @@ npm i cypress-queries-builder --save-dev
 ## Initialization
 The library provides the set of interfaces and the `build` function,
 ```
-import { build } from 'cypress-queries';
+import { build } from 'cypress-queries-builder';
 ```
 Then, builder instance need to be initialized inside cypress context function (`cy` - Cypress instance):
 
