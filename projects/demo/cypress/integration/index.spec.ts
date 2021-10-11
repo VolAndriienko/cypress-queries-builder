@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { build } from 'cypress-queries';
+import { build } from 'cypress-queries-builder';
 
 context('Actions', () => {
   const _ = build(cy);

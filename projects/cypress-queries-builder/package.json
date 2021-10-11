@@ -1,6 +1,6 @@
 {
-  "name": "cypress-queries",
-  "version": "0.0.5",
+  "name": "cypress-queries-builder",
+  "version": "0.0.2",
   "author": "VolAndriienko",
   "repository": {
     "type": "git",

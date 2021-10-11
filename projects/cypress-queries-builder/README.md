@@ -5,7 +5,7 @@ This is library for simplifying writing queries with [Cypress](https://www.cypre
 ## Installation
 To install with npm, run command:
 ```
-npm i cypress-queries --save-dev
+npm i cypress-queries-builder --save-dev
 ```
 
 
