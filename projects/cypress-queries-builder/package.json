@@ -1,5 +1,5 @@
 {
-  "name": "cypress-queries-builder",
+  "name": "@bitergo/cypress-queries-builder",
   "version": "0.0.4",
   "author": "VolAndriienko",
   "repository": {
@@ -13,5 +13,8 @@
   },
   "dependencies": {
     "tslib": "^2.1.0"
+  },
+  "publishConfig": {
+    "registry": "http://127.0.0.1:8081/repository/test-hosted/"
   }
 }
