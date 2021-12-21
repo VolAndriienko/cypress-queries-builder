@@ -21,7 +21,7 @@ const getElementIndex = (elementNumber?: number): number => elementNumber !== un
 
 const getSelectors = (selectors: t.StringOrArray): string => Array.isArray(selectors) ? selectors.join(' ') : selectors;
 
-const stringValue = (value: string) => value || '';
+const stringValue = (value?: string) => value || '';
 
 const specialChars = {
   enter: (is?: boolean) => is ? '{enter}' : '',
@@ -53,7 +53,13 @@ const isDisalbed = (disabled: boolean) => disabled ? 'be.disabled' : 'not.be.dis
 //#endregion
 const defaultSelector = 'body';
 
-function build(cy: Cypress.cy, params: t.CypressQueriesParams = { pathPrefix: '', findInFrame: false }): t.BuilderActions {
+function build(cy: Cypress.cy, inputParams?: Partial<t.CypressQueriesParams>): t.BuilderActions {
+    const params: Partial<t.CypressQueriesParams> = {
+        findInFrame: false,
+        pathPrefix: '',
+        ...inputParams
+    };
+
   //#region storybook
   const mainSelector = () => params.mainSelector || defaultSelector
 

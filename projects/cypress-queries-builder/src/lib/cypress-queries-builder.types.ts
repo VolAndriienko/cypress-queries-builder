@@ -10,14 +10,14 @@ export interface NameValue {
 
 export interface CypressQueriesParams {
   findInFrame: boolean;
-  mainSelector?: string;
+  mainSelector: string;
   pathPrefix: string;
-  iframeBody?: Cypress.Chainable<unknown>;
-  hideToolbar?: () => void;
-  showToolbar?: () => void;
-  toggleMenu?: () => void;
-  hideMenu?: () => void;
-  keydown?: (key: string) => void;
+  iframeBody: Cypress.Chainable<unknown>;
+  hideToolbar: () => void;
+  showToolbar: () => void;
+  toggleMenu: () => void;
+  hideMenu: () => void;
+  keydown: (key: string) => void;
 }
 
 export type TestCase = () => void;
